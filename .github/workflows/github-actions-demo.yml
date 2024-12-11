@@ -26,16 +26,16 @@ jobs:
             Library-
 
       # Build
-      - name: Build project
-        uses: game-ci/unity-builder@v4
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        with:
-          unityVersion: 2019.4.40f1
-          targetPlatform: WebGL
-          buildMethod: Build.Test
+#      - name: Build project
+#        uses: game-ci/unity-builder@v4
+#        env:
+#          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+#          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+#          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+#        with:
+#          unityVersion: 2019.4.40f1
+#          targetPlatform: WebGL
+#          buildMethod: Build.Test
   build2:
     needs: build
     name: Build my project222 ✨
@@ -60,13 +60,23 @@ jobs:
             Library-
 
       # Build
-      - name: Build project
-        uses: game-ci/unity-builder@v4
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+#      - name: Build project
+#        uses: game-ci/unity-builder@v4
+#        env:
+#          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+#          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+#          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+#        with:
+#          unityVersion: 2019.4.40f1
+#          targetPlatform: WebGL
+#          buildMethod: Build.Test
+  build3:
+    needs: build2
+    name: Build my project3333✨
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          unityVersion: 2019.4.40f1
-          targetPlatform: WebGL
-          buildMethod: Build.Test
+          lfs: true
