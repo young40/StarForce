@@ -23,7 +23,7 @@ jobs:
           path: Library
           key: Library-${{ github.job }}-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
           restore-keys: |
-            Library-
+            Library-${{ github.job }}-
 
       # Build
       - name: Build project
@@ -57,7 +57,7 @@ jobs:
           path: Library
           key: Library-${{ github.job }}-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
           restore-keys: |
-            Library-
+            Library-${{ github.job }}-
 
       # Build
       - name: Build project
