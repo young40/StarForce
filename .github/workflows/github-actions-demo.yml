@@ -37,6 +37,7 @@ jobs:
           targetPlatform: WebGL
           buildMethod: Build.Test
   build2:
+    needs: build
     name: Build my project222 ✨
     runs-on: ubuntu-latest
     steps:
