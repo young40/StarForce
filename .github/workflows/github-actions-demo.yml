@@ -41,7 +41,7 @@ jobs:
         with:
           name: Build
           path: build
-  build:
+  build2:
     name: Build my project222 ✨
     runs-on: ubuntu-latest
     steps:
