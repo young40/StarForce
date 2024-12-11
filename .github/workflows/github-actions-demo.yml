@@ -25,17 +25,45 @@ jobs:
           restore-keys: |
             Library-
 
-      # Test
-      - name: Run tests
-        uses: game-ci/unity-test-runner@v4
+      # Build
+      - name: Build project
+        uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           unityVersion: 2019.4.40f1
-          projectPath: ./
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          targetPlatform: WebGL
+
+      # Output
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Build
+          path: build
+
+
+  build:
+    name: Build my project222 ✨
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+          submodules: true
+
+      - name: Get directory
+        run: ls
+
+      # Cache
+      - uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
 
       # Build
       - name: Build project
@@ -45,6 +73,7 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
+          unityVersion: 2019.4.40f1
           targetPlatform: WebGL
 
       # Output
