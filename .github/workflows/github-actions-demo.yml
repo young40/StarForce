@@ -7,10 +7,14 @@ env:
   BUILD_METHOD: Build.Test
 
 jobs:
-  v2019:
-    needs: v2018
-    name: Test with ${{ github.job }}
+  build:
+    name: Test with Unity Open
     runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        unity_version: [6000.0.30f1, 2023.2.20f1, 2022.3.54f1, 2021.3.47f1, 2020.3.48f1, 2019.4.40f1, 2018.4.36f1]
+        
     steps:
       # Checkout
       - name: Checkout repository
@@ -23,9 +27,9 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: Library
-          key: Library-${{ github.job }}-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          key: Library-${{ matrix.unity_version }}-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
           restore-keys: |
-            Library-${{ github.job }}-
+            Library-${{ matrix.unity_version }}-
 
       # Build
       - name: Build project
@@ -35,38 +39,6 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          unityVersion: 2019.4.40f1
-          targetPlatform: ${{ env.TARGET_PLATFORM }}
-          buildMethod: ${{ env.BUILD_METHOD }}
-  
-  v2018:
-    #needs: build
-    name: Test with ${{ github.job }}
-    runs-on: ubuntu-latest
-    steps:
-      # Checkout
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          lfs: true
-          submodules: true
-
-      # Cache
-      - uses: actions/cache@v3
-        with:
-          path: Library
-          key: Library-${{ github.job }}-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
-          restore-keys: |
-            Library-${{ github.job }}-
-
-      # Build
-      - name: Build project
-        uses: game-ci/unity-builder@v4
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        with:
-          unityVersion: 2018.4.36f1
+          unityVersion: ${{ matrix.unity_version }}
           targetPlatform: ${{ env.TARGET_PLATFORM }}
           buildMethod: ${{ env.BUILD_METHOD }}
