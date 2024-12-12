@@ -36,8 +36,8 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           unityVersion: 2019.4.40f1
-          targetPlatform: $TARGET_PLATFORM
-          buildMethod: $BUILD_METHOD
+          targetPlatform: ${{ env.TARGET_PLATFORM }}
+          buildMethod: ${{ env.BUILD_METHOD }}
   
   v2018:
     #needs: build
@@ -68,5 +68,5 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           unityVersion: 2018.4.36f1
-          targetPlatform: $TARGET_PLATFORM
-          buildMethod: $BUILD_METHOD
+          targetPlatform: ${{ TARGET_PLATFORM }}
+          buildMethod: ${{ BUILD_METHOD }}
