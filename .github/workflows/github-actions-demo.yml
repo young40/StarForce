@@ -1,10 +1,15 @@
-name: Actions 😎
+name: Unity Open Test
 
 on: [push, pull_request]
 
+env:
+  TARGET_PLATFORM: WebGL
+  BUILD_METHOD: Build.Test
+
 jobs:
-  build:
-    name: Build my project ✨
+  v2019:
+    needs: v2018
+    name: Test with ${{ github.job }}
     runs-on: ubuntu-latest
     steps:
       # Checkout
@@ -13,9 +18,6 @@ jobs:
         with:
           lfs: true
           submodules: true
-
-      - name: Get directory
-        run: ls
 
       # Cache
       - uses: actions/cache@v3
@@ -34,11 +36,12 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           unityVersion: 2019.4.40f1
-          targetPlatform: WebGL
-          buildMethod: Build.Test
-  build2:
-    needs: build
-    name: Build my project222 ✨
+          targetPlatform: $TARGET_PLATFORM
+          buildMethod: $BUILD_METHOD
+  
+  v2018:
+    #needs: build
+    name: Test with ${{ github.job }}
     runs-on: ubuntu-latest
     steps:
       # Checkout
@@ -47,9 +50,6 @@ jobs:
         with:
           lfs: true
           submodules: true
-
-      - name: Get directory
-        run: ls
 
       # Cache
       - uses: actions/cache@v3
@@ -68,5 +68,5 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           unityVersion: 2018.4.36f1
-          targetPlatform: WebGL
-          buildMethod: Build.Test
+          targetPlatform: $TARGET_PLATFORM
+          buildMethod: $BUILD_METHOD
